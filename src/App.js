@@ -1,29 +1,36 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
+import VideoPlayer from './VideoPlayer'
 
 class App extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      videoUrl: ""
+    }
+  }
+
+  handleFileUpload = e => {
+    const file = e.target.files[0]
+    const type = file.type
+
+    const fileURL = URL.createObjectURL(file)
+    this.setState({
+      videoUrl: fileURL
+    })
+  }
+
   render() {
     return (
-      // <div className="App">
-      //   <div className="App-header">
-      //     <img src={logo} className="App-logo" alt="logo" />
-      //     <h2>Welcome to React</h2>
-      //   </div>
-      //   <p className="App-intro">
-      //     To get started, edit <code>src/App.js</code> and save to reload.
-      //   </p>
-      // </div>
-      <div className="player">
-        <video className="player__video viewer" src=""></video>
-        <div className="player__controls">
-          <div className="progress">
-            <div className="progress__filled"></div>
-          </div>
-          <button className="player__button toggle" title="Toggle Play">►</button>
-          <input type="range" name="volume" className="player__slider" min="0" max="1" step="0.05" value="1"/>
-          <input type="range" name="playbackRate" className="player__slider" min="0.5" max="2" step="0.1" value="1"/>
-        </div>
+      <div className="App">
+        <label htmlFor="upload-video">Upload Video</label>
+        <input id="upload-video"
+               type="file"
+               accept="video/*"
+               onChange={this.handleFileUpload}
+               style={{display:'none'}}/>
+        <VideoPlayer source={this.state.videoUrl}/>
       </div>
     );
   }
