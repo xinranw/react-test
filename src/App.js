@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import VideoPlayer from './VideoPlayer'
+import ClipControls from './ClipControls'
 
 class App extends Component {
   constructor(props){
@@ -24,13 +25,17 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <label htmlFor="upload-video">Upload Video</label>
-        <input id="upload-video"
+        <label htmlFor="uploadVideo" className="ui labeled icon button">
+          <i className="icon upload"></i>
+            Upload Video
+        </label>
+        <input id="uploadVideo"
+               className="input-file"
                type="file"
                accept="video/*"
-               onChange={this.handleFileUpload}
-               style={{display:'none'}}/>
+               onChange={this.handleFileUpload}/>
         <VideoPlayer source={this.state.videoUrl}/>
+        <ClipControls />
       </div>
     );
   }

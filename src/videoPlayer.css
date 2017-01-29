@@ -1,0 +1,19 @@
+.volume-control{
+  display: flex;
+  justify-content: flex-end;
+}
+
+#volumeIcon{
+  background: none;
+  color: white;
+  font-size: initial;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#volumeSlider{
+  width: 30%;
+  min-width: 50px;
+  max-width: 150px;
+}

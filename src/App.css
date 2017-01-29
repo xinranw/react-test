@@ -33,6 +33,7 @@ html {
 }
 
 video {
+  display: block;
   width: 100%;
   height: auto;
   max-height: 50vh;
@@ -181,4 +182,14 @@ input[type=range]::-moz-range-thumb {
   border-radius: 50px;
   background: #ffc600;
   cursor: pointer;
+}
+
+
+.input-file {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
 }
