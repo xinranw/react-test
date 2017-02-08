@@ -12,10 +12,6 @@ class VideoPlayer extends Component {
     }
   }
 
-  componentWillReceiveProps = nextProps => {
-    console.log(nextProps)
-  }
-
   componentDidMount = () => {
     const progress = this.refs.progress
     progress.addEventListener('click', this.scrub)
@@ -92,7 +88,9 @@ class VideoPlayer extends Component {
                   onClick={this.togglePlay}>
               {buttonIcon}
           </button>
-          <VolumeControls changeVolume={this.changeVolume}/>
+          <VolumeControls volumeSettings={this.props.volumeSettings} 
+                          toggleMute={this.props.toggleMute}
+                          setVolume={this.props.setVolume} />
         </div>
       </div>
     )
