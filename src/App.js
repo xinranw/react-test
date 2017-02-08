@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import VideoPlayer from './VideoPlayer'
-import ClipControls from './ClipControls'
+import VideoPlayer from './components/VideoPlayer'
+import ClipControls from './components/ClipControls'
 
 class App extends Component {
   constructor(props){
@@ -22,7 +22,7 @@ class App extends Component {
     })
   }
 
-  render() {
+  render = () => {
     return (
       <div className="App">
         <label htmlFor="uploadVideo" className="ui labeled icon button">

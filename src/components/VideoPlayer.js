@@ -11,7 +11,7 @@ class VideoPlayer extends Component {
     }
   }
 
-  componentDidMount(){
+  componentDidMount = () => {
     const progress = this.refs.progress
     progress.addEventListener('click', this.scrub)
     progress.addEventListener('mousemove', (e) => this.state.isScrubbing && this.scrub(e))
@@ -64,7 +64,7 @@ class VideoPlayer extends Component {
     this.refs.video.volume = newValue
   }
 
-  render() {
+  render = () => {
     const buttonIcon = this.state.videoPaused ? '►' : '❚ ❚';
     const videoProgressPercent = this.state.videoProgress + '%'
     return (
