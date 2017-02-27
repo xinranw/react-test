@@ -1,10 +1,10 @@
-const volumeSettings = (state = {volume: 1, isMuted: false}, action) => {
+const DEFAULT_STATE = {
+  volume: 1, 
+  isMuted: false
+}
+
+const volumeSettings = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
-    case 'SET_VIDEO_URL':
-      return {
-        ...state,
-        url: action.videoUrl
-      }
     case 'SET_VOLUME':
       const volume = action.volume
       return {
