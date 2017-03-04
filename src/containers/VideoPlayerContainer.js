@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import VideoPlayer from './../components/VideoPlayer'
+import * as VideoHelper from './../components/VideoHelper'
 import * as Actions from './../actions/index'
 
 class VideoPlayerContainer extends Component {
@@ -25,8 +26,38 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+  const addVideoEventListeners = (video) => {
+    video.addEventListener('click', () => {
+      const method = video.paused ? 'play' : 'pause'
+      video[method]()
+    })
+    video.addEventListener('play', (e) => {
+      dispatch(Actions.setVideoPlayState(video.paused))
+    })
+    video.addEventListener('pause', (e) => {
+      dispatch(Actions.setVideoPlayState(video.paused))
+    })
+    video.addEventListener('timeupdate', (e) => {
+      const percent = VideoHelper.timeToPercent(video.currentTime, video.duration)
+      dispatch(Actions.setVideoProgress(percent))
+    })
+  }
+
+  const setVolume = e => {
+    const newVolume = Number(e.target.value)
+    dispatch(Actions.setVolume(newVolume))
+  }
+
+  const togglePlay = video => {
+    const method = video.paused ? 'play' : 'pause'
+    video[method]()
+  }
+
   const actions = {
     ...bindActionCreators(Actions, dispatch),
+    addVideoEventListeners,
+    setVolume,
+    togglePlay,
   }
   return {
     actions: actions

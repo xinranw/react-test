@@ -30,15 +30,8 @@ class VideoPlayer extends Component {
     })
 
     const video = this.refs.video
-    video.addEventListener('click', this.togglePlay)
-    video.addEventListener('play', this.props.actions.setVideoPlayState(video.paused))
-    video.addEventListener('pause', this.props.actions.setVideoPlayState(video.paused))
+    this.props.actions.addVideoEventListeners(video)
     video.addEventListener('timeupdate', (e) => {
-      // update store video progress
-      const percent = VideoHelper.timeToPercent(video.currentTime, video.duration)
-      this.props.actions.setVideoProgress(percent)
-
-      // check if loop was activated
       const currActiveLoopIndex = this.props.loopState.activeLoopIndex
       const activeLoop = this.props.loopState.loops[currActiveLoopIndex]
       const startTime = VideoHelper.percentToTime(activeLoop.start, video.duration)
@@ -51,6 +44,7 @@ class VideoPlayer extends Component {
 
   componentDidUpdate = (prevProps, prevState) => {
     const volume = this.props.volumeSettings.isMuted ? 0 : this.props.volumeSettings.volume
+    console.log(volume)
     this.refs.video.volume = volume
 
     const prevActiveLoopIndex = prevProps.loopState.activeLoopIndex
@@ -64,21 +58,15 @@ class VideoPlayer extends Component {
     }
   }
 
-  setVolume = e => {
-    const newVolume = Number(e.target.value)
-    this.props.actions.setVolume(newVolume)
-  }
+  // setVolume = e => {
+  //   const newVolume = Number(e.target.value)
+  //   this.props.actions.setVolume(newVolume)
+  // }
 
   scrub = e => {
     const video = this.refs.video
     const newTime = (e.offsetX / this.refs.progress.offsetWidth) * video.duration
     video.currentTime = newTime
-  }
-
-  togglePlay = e => {
-    const video = this.refs.video
-    const method = video.paused ? 'play' : 'pause'
-    video[method]()
   }
 
   render = () => {
@@ -111,12 +99,12 @@ class VideoPlayer extends Component {
           </div>
           <button className="player__button toggle"
                   title="Toggle Play"
-                  onClick={this.togglePlay}>
+                  onClick={this.props.actions.togglePlay.bind(this, this.refs.video)}>
             {buttonIcon}
           </button>
           <VolumeControls volumeSettings={this.props.volumeSettings} 
                           toggleMute={this.props.actions.toggleMute}
-                          setVolume={this.setVolume} />
+                          setVolume={this.props.actions.setVolume} />
         </div>
       </div>
       )
