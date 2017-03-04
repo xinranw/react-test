@@ -1,3 +1,10 @@
+.loop-marker{
+  position: absolute;
+  font-size: initial;
+  color: #ffc600;
+  top: -13px;
+}
+
 .volume-control{
   display: flex;
   justify-content: flex-end;

@@ -15,7 +15,7 @@ const VideoUploader = ({ dispatch }) => {
              accept="video/*"
              onChange={ (e) => {
                const file = e.target.files[0]
-               const type = file.type
+               // const type = file.type
                const fileURL = URL.createObjectURL(file)
                dispatch(setVideoUrl(fileURL))
              }} />

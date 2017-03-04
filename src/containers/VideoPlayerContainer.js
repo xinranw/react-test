@@ -8,6 +8,7 @@ class VideoPlayerContainer extends Component {
   render = () => {
     return (
       <VideoPlayer
+        loopState={this.props.loopState}
         videoState={this.props.videoState}
         volumeSettings={this.props.volumeSettings}
         actions={this.props.actions} />
@@ -17,25 +18,15 @@ class VideoPlayerContainer extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return { 
+    loopState: state.loops,
     videoState: state.video,
-    volumeSettings: state.volumeSettings
+    volumeSettings: state.volumeSettings,
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const setVolume = (e) => {
-    const newVolume = Number(e.target.value)
-    dispatch(Actions.setVolume(newVolume))
-  }
-  const updateProgress = (e) => {
-    const video = e.target
-    const percent = (video.currentTime / video.duration) * 100
-    dispatch(Actions.setVideoProgress(percent))
-  }
   const actions = {
     ...bindActionCreators(Actions, dispatch),
-    setVolume,
-    updateProgress,
   }
   return {
     actions: actions

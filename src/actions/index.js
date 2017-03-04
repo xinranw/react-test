@@ -22,3 +22,18 @@ export const setVolume = (volume) => ({
 export const toggleMute = () => ({
   type: 'TOGGLE_MUTE'
 })
+
+export const startLoop = (index, time) => ({
+  type: 'START_LOOP',
+  index,
+  time
+})
+export const endLoop = (index, time) => ({
+  type: 'END_LOOP',
+  index,
+  time
+})
+export const selectLoop = (index) => ({
+  type: 'SELECT_LOOP',
+  index
+})

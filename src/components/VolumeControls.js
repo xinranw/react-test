@@ -1,6 +1,6 @@
 import React from 'react';
 
-let VolumeControls = ({ volumeSettings, toggleMute, setVolume }) => {
+const VolumeControls = ({ volumeSettings, toggleMute, setVolume }) => {
   let volumeButtonClass
   if (volumeSettings.volume === 0 || volumeSettings.isMuted){
     volumeButtonClass = 'fa-volume-off'

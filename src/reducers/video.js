@@ -2,7 +2,7 @@ const DEFAULT_STATE = {
   url: '',
   isPaused: false,
   // isScrubbing: false,
-  videoProgress: 0
+  videoProgress: 0,
 }
 const video = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
