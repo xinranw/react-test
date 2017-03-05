@@ -10,10 +10,11 @@ export const setVideoProgress = (videoProgress) => ({
   type: 'SET_VIDEO_PROGRESS',
   videoProgress
 })
-// export const setVideoScrubState = (isScrubbing) => ({
-//   type: 'SET_VIDEO_SCRUB_STATE',
-//   isScrubbing
-// })
+export const setVideoScrubState = (isScrubbing) => ({
+  type: 'SET_VIDEO_SCRUB_STATE',
+  isScrubbing
+})
+
 
 export const setVolume = (volume) => ({
   type: 'SET_VOLUME',
@@ -22,6 +23,7 @@ export const setVolume = (volume) => ({
 export const toggleMute = () => ({
   type: 'TOGGLE_MUTE'
 })
+
 
 export const startLoop = (index, time) => ({
   type: 'START_LOOP',
@@ -36,4 +38,7 @@ export const endLoop = (index, time) => ({
 export const selectLoop = (index) => ({
   type: 'SELECT_LOOP',
   index
+})
+export const getActiveLoop = () => ({
+  type: 'GET_ACTIVE_LOOP'
 })

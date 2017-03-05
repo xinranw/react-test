@@ -1,7 +1,7 @@
 const DEFAULT_STATE = {
   url: '',
   isPaused: false,
-  // isScrubbing: false,
+  isScrubbing: false,
   videoProgress: 0,
 }
 const video = (state = DEFAULT_STATE, action) => {
@@ -21,11 +21,11 @@ const video = (state = DEFAULT_STATE, action) => {
         ...state,
         isPaused: action.playState
       }
-    // case 'SET_VIDEO_SCRUB_STATE':
-    //   return {
-    //     ...state,
-    //     isScrubbing: !state.isScrubbing
-    //   }
+    case 'SET_VIDEO_SCRUB_STATE':
+      return {
+        ...state,
+        isScrubbing: action.isScrubbing
+      }
     default:
       return state
   }

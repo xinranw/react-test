@@ -5,76 +5,63 @@ import './videoPlayer.css'
 
 class VideoPlayer extends Component {
 
-  constructor(props){
-    super(props)
-    this.state = {
-      isScrubbing: false
-    }
-  }
-
   componentDidMount = () => {
     const progress = this.refs.progress
+    const video = this.refs.video
+
+    this.props.actions.addProgressEventListeners(progress)
     progress.addEventListener('click', (e) => {
-      this.scrub(e)
+      this.props.actions.scrub(e.offsetX, progress, video)
     })
-    progress.addEventListener('mousemove', (e) => this.state.isScrubbing && this.scrub(e))
-    progress.addEventListener('mousedown', () => {
-      this.setState({
-        isScrubbing: true
-      })
-    })
-    progress.addEventListener('mouseup', () => {
-      this.setState({
-        isScrubbing: false
-      })
+    progress.addEventListener('mousemove', (e) => {
+      if (this.props.videoState.isScrubbing) {
+        this.props.actions.scrub(e.offsetX, progress, video)
+      }
     })
 
-    const video = this.refs.video
     this.props.actions.addVideoEventListeners(video)
     video.addEventListener('timeupdate', (e) => {
-      const currActiveLoopIndex = this.props.loopState.activeLoopIndex
-      const activeLoop = this.props.loopState.loops[currActiveLoopIndex]
-      const startTime = VideoHelper.percentToTime(activeLoop.start, video.duration)
-      const endTime = VideoHelper.percentToTime(activeLoop.end, video.duration)
-      if (video.currentTime >= endTime){
-        video.currentTime = startTime
+      const activeLoop = this.getActiveLoop()
+      if (activeLoop){
+        const startTime = VideoHelper.percentToTime(activeLoop.start, video.duration)
+        const endTime = VideoHelper.percentToTime(activeLoop.end, video.duration)
+        if (video.currentTime >= endTime){
+          video.currentTime = startTime
+        }
       }
     })
   }
 
   componentDidUpdate = (prevProps, prevState) => {
+    const video = this.refs.video
+
     const volume = this.props.volumeSettings.isMuted ? 0 : this.props.volumeSettings.volume
-    console.log(volume)
     this.refs.video.volume = volume
 
     const prevActiveLoopIndex = prevProps.loopState.activeLoopIndex
     const currActiveLoopIndex = this.props.loopState.activeLoopIndex
-    if (prevActiveLoopIndex !== currActiveLoopIndex) {
+    if (currActiveLoopIndex && prevActiveLoopIndex !== currActiveLoopIndex) {
       // active loop changed, play new loop
-      const video = this.refs.video
-      const activeLoop = this.props.loopState.loops[currActiveLoopIndex]
+      const activeLoop = this.getActiveLoop()
       const startTime = VideoHelper.percentToTime(activeLoop.start, video.duration)
       video.currentTime = startTime
     }
   }
 
-  // setVolume = e => {
-  //   const newVolume = Number(e.target.value)
-  //   this.props.actions.setVolume(newVolume)
-  // }
-
-  scrub = e => {
-    const video = this.refs.video
-    const newTime = (e.offsetX / this.refs.progress.offsetWidth) * video.duration
-    video.currentTime = newTime
+  getActiveLoop = () => {
+    const activeLoopIndex = this.props.loopState.activeLoopIndex
+    if (activeLoopIndex != null) {
+      const activeLoop = this.props.loopState.loops[activeLoopIndex]
+      return activeLoop
+    }
+    return null
   }
 
   render = () => {
     const buttonIcon = this.props.videoState.isPaused ? '►' : '❚ ❚';
     const videoProgressPercent = this.props.videoState.videoProgress + '%'
 
-    const activeLoopIndex = this.props.loopState.activeLoopIndex
-    const activeLoop = this.props.loopState.loops[activeLoopIndex]
+    const activeLoop = this.getActiveLoop()
     const loopStart = activeLoop ? `${activeLoop.start}%` : '0%'
     const loopEnd = activeLoop ? `${activeLoop.end}%` : '0%'
 

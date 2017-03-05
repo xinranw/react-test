@@ -26,6 +26,15 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+  const addProgressEventListeners = (progress) => {
+    progress.addEventListener('mousedown', () => {
+      dispatch(Actions.setVideoScrubState(true))
+    })
+    progress.addEventListener('mouseup', () => {
+      dispatch(Actions.setVideoScrubState(false))
+    })
+  }
+
   const addVideoEventListeners = (video) => {
     video.addEventListener('click', () => {
       const method = video.paused ? 'play' : 'pause'
@@ -43,6 +52,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     })
   }
 
+  const scrub = (offsetX, progress, video) => {
+    const newTime = (offsetX / progress.offsetWidth) * video.duration
+    video.currentTime = newTime
+  }
+
   const setVolume = e => {
     const newVolume = Number(e.target.value)
     dispatch(Actions.setVolume(newVolume))
@@ -55,7 +69,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
   const actions = {
     ...bindActionCreators(Actions, dispatch),
+    addProgressEventListeners,
     addVideoEventListeners,
+    scrub,
     setVolume,
     togglePlay,
   }
