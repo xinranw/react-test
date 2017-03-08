@@ -4,20 +4,21 @@ import { bindActionCreators } from 'redux'
 import * as Actions from './../actions/index'
 import './loopControls.css'
 
-class LoopButton extends Component {
-  render(){
-    return (
-      <div>
-        <button className="fa-lg" onClick={this.props.playLoop} disabled={!this.props.isLoopSet}>Loop {this.props.index}</button>
-        <button className="record-button" onClick={this.props.handleRecord}>
-          <span className="fa-stack fa-lg">
-            <i className="fa fa-circle fa-stack-2x record-button__outside"></i>
-            <i className="fa fa-circle fa-stack-1x record-button__inside"></i>
-          </span>
-        </button>
-      </div>
-    )
-  }
+const Looper = ({index, isLoopSet, isPlaying, handleNewLoop, handlePlay, handleRecord}) => {
+  return (
+    <div className="loop-control flex flex-row w100">
+      <button className="loop-control__loop-button" onClick={handlePlay} disabled={!isLoopSet}>
+        <i className="fa fa-play margin-left-1 margin-right-1"></i>
+        <span className="margin-left-1">Loop {index}</span>
+      </button>
+      <button className="record-button" onClick={handleRecord}>
+        <span className="fa-stack fa-lg">
+          <i className="fa fa-circle fa-stack-2x record-button__outside"></i>
+          <i className="fa fa-circle fa-stack-1x record-button__inside"></i>
+        </span>
+      </button>
+    </div>
+  )
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -38,7 +39,25 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 class LoopControls extends Component {
 
+  constructor(props){
+    super(props)
+    this.state = {
+      numLoops: Math.max(props.loopState.loops.length, 1)
+    }
+  }
+
+  handleNewLoop = () => {
+    console.log('new loop')
+    this.setState({
+      numLoops: this.state.numLoops + 1
+    })
+  }
+
   handleRecord = (i) => {
+    if (!this.props.videoState.videoURL) {
+      return
+    }
+
     const loops = this.props.loopState.loops
     const isAnotherLoopRecording = loops.filter((loop) => {
       return loop.isRecording && loop.index !== i
@@ -63,14 +82,16 @@ class LoopControls extends Component {
 
   renderButtons = () => {
     const loops = this.props.loopState.loops
-    const buttons = [...Array(10).keys()].slice(1).map((i) => {
-      const index = i-1
+    const numButtons = Math.max(this.props.loopState.loops.length, this.state.numLoops)
+
+    const buttons = [...Array(numButtons).keys()].map((index) => {
       const isLoopSet = loops[index] && loops[index].start && loops[index].end
-      return <LoopButton key={index}
-                         index={index}
-                         isLoopSet={isLoopSet}
-                         playLoop={this.playLoop.bind(this, index)} 
-                         handleRecord={this.handleRecord.bind(this, index)}></LoopButton>
+      return <Looper key={index}
+                     index={index}
+                     isLoopSet={isLoopSet}
+                     handleNewLoop={this.handleNewLoop}
+                     handlePlay={this.playLoop.bind(this, index)} 
+                     handleRecord={this.handleRecord.bind(this, index)}></Looper>
     })
     return buttons
   }
@@ -78,8 +99,13 @@ class LoopControls extends Component {
   render = () => {
     const buttons = this.renderButtons()
     return (
-      <div className="">
-        { buttons }
+      <div className="loop-controls-container flex flex-row w100 margin-top-2">
+        <div className="flex flex-column w100">
+          { buttons }
+        </div>
+        <button onClick={this.handleNewLoop}>
+          <i className="fa fa-plus"></i>
+        </button>
       </div>
     )
   }

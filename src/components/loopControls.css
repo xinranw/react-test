@@ -1,3 +1,17 @@
+.loop-controls-container{
+  align-items: flex-end;
+}
+
+.loop-control__loop-button{
+  flex-grow: 1;
+
+  text-align: left;
+}
+
+.record-button{
+  font-size: 10px;
+}
+
 .record-button__outside{
   color: gray;
 }

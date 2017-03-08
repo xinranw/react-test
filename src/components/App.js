@@ -9,9 +9,11 @@ class App extends Component {
   render = () => {
     return (
       <div className="App">
-        <UploadVideo />
-        <VideoPlayerContainer />
-        <LoopControls />
+        <div className="loop-player-container">
+          <UploadVideo />
+          <VideoPlayerContainer />
+          <LoopControls />
+        </div>
       </div>
     );
   }
