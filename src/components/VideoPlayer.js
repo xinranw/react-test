@@ -11,11 +11,13 @@ class VideoPlayer extends Component {
 
     this.props.actions.addProgressEventListeners(progress)
     progress.addEventListener('click', (e) => {
-      this.props.actions.scrub(e.offsetX, progress, video)
+
+
+      this.scrub(e.offsetX, progress, video)
     })
     progress.addEventListener('mousemove', (e) => {
       if (this.props.videoState.isScrubbing) {
-        this.props.actions.scrub(e.offsetX, progress, video)
+        this.scrub(e.offsetX, progress, video)
       }
     })
 
@@ -57,6 +59,21 @@ class VideoPlayer extends Component {
     return null
   }
 
+  scrub = (offsetX, progress, video) => {
+    const newTime = (offsetX / progress.offsetWidth) * video.duration
+
+    const activeLoop = this.getActiveLoop()
+    if (activeLoop){
+      const loopEndTime = VideoHelper.percentToTime(activeLoop.end, video.duration)
+      
+      if (newTime > loopEndTime){
+        this.props.actions.resetActiveLoop()
+      }
+    }
+
+    video.currentTime = newTime
+  }
+
   render = () => {
     const buttonIcon = this.props.videoState.isPaused ? '►' : '❚ ❚';
     const videoProgressPercent = this.props.videoState.videoProgress + '%'
@@ -65,6 +82,8 @@ class VideoPlayer extends Component {
     const loopStart = activeLoop ? `${activeLoop.start}%` : '0%'
     const loopEnd = activeLoop ? `${activeLoop.end}%` : '0%'
 
+    const hasActiveLoop = this.props.loopState.activeLoopIndex != null
+    const loopMarkerClass = `fa fa-caret-down loop-marker ${hasActiveLoop ? "" : 'hidden' }`
     return (
       <div className="player">
         <video className="player__video viewer"
@@ -76,9 +95,9 @@ class VideoPlayer extends Component {
         <div className="player__controls">
           <div className="progress"
                ref="progress">
-            <i className="fa fa-caret-down fa-2x loop-marker"
+            <i className={ loopMarkerClass }
                style={{left:loopStart}}></i>
-            <i className="fa fa-caret-down fa-2x loop-marker"
+            <i className={ loopMarkerClass }
                style={{left:loopEnd}}></i>
             <div className="progress__filled"
                  style={{flexBasis:videoProgressPercent}}>

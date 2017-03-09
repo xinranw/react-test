@@ -4,6 +4,10 @@
   color: #ffc600;
   top: -13px;
 }
+.loop-marker::before{
+  position: absolute;
+  left: -5px;
+}
 
 .volume-control{
   display: flex;

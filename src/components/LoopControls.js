@@ -8,7 +8,10 @@ const Looper = ({index, isLoopSet, isPlaying, handleNewLoop, handlePlay, handleR
   return (
     <div className="loop-control flex flex-row w100">
       <button className="loop-control__loop-button" onClick={handlePlay} disabled={!isLoopSet}>
-        <i className="fa fa-play margin-left-1 margin-right-1"></i>
+        <span className="fa-stack fa-lg">
+          <i className="fa fa-circle fa-stack-2x"></i>
+          <i className="fa fa-play fa-stack-1x fa-inverse"></i>
+        </span>
         <span className="margin-left-1">Loop {index}</span>
       </button>
       <button className="record-button" onClick={handleRecord}>
@@ -54,7 +57,7 @@ class LoopControls extends Component {
   }
 
   handleRecord = (i) => {
-    if (!this.props.videoState.videoURL) {
+    if (!this.props.videoState.url) {
       return
     }
 

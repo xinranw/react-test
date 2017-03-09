@@ -52,11 +52,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     })
   }
 
-  const scrub = (offsetX, progress, video) => {
-    const newTime = (offsetX / progress.offsetWidth) * video.duration
-    video.currentTime = newTime
-  }
-
   const setVolume = e => {
     const newVolume = Number(e.target.value)
     dispatch(Actions.setVolume(newVolume))
@@ -71,7 +66,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     ...bindActionCreators(Actions, dispatch),
     addProgressEventListeners,
     addVideoEventListeners,
-    scrub,
     setVolume,
     togglePlay,
   }

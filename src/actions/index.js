@@ -42,3 +42,6 @@ export const selectLoop = (index) => ({
 export const getActiveLoop = () => ({
   type: 'GET_ACTIVE_LOOP'
 })
+export const resetActiveLoop = () => ({
+  type: 'RESET_ACTIVE_LOOP'
+})

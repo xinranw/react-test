@@ -175,6 +175,8 @@ body {
 /********************************************
 Displays
 ********************************************/
+.hidden { display: none; }
+
 .flex { display: flex; }
 
 .flex-column { flex-direction: column; }

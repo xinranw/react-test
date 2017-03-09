@@ -39,6 +39,11 @@ const loops = (state = DEFAULT_STATE, action) => {
         ...state,
         activeLoopIndex: action.index
       }
+    case 'RESET_ACTIVE_LOOP':
+      return {
+        ...state,
+        activeLoopIndex: null
+      }
     default:
       return state
   }
