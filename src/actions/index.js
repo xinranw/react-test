@@ -15,6 +15,10 @@ export const setVideoScrubState = (isScrubbing) => ({
   isScrubbing
 })
 
+export const setVideoFullscreenState = (isFullscreen) => ({
+  type: 'SET_VIDEO_FULLSCREEN_STATE',
+  isFullscreen
+})
 
 export const setVolume = (volume) => ({
   type: 'SET_VOLUME',

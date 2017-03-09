@@ -1,6 +1,6 @@
 const DEFAULT_STATE = {
   url: '',
-  isPaused: false,
+  isPaused: true,
   isScrubbing: false,
   videoProgress: 0,
 }

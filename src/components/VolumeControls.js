@@ -10,10 +10,10 @@ const VolumeControls = ({ volumeSettings, toggleMute, setVolume }) => {
     volumeButtonClass = 'fa-volume-up'
   }
 
-  const classes = `fa ${volumeButtonClass} player__button`
+  const volumeButtonClasses = `fa ${volumeButtonClass} player__button bg-none white outline-0 margin-0 border-0 padding-0`
   return (
-    <div className="volume-control">
-      <button className={classes}
+    <div className="volume-control flex">
+      <button className={volumeButtonClasses}
               id="volumeIcon"
               onClick={toggleMute}></button>
       <input type="range"

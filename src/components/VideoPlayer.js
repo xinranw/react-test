@@ -75,7 +75,7 @@ class VideoPlayer extends Component {
   }
 
   render = () => {
-    const buttonIcon = this.props.videoState.isPaused ? '►' : '❚ ❚';
+    const playButtonClasses = this.props.videoState.isPaused ? 'fa fa-play' : 'fa fa-pause';
     const videoProgressPercent = this.props.videoState.videoProgress + '%'
 
     const activeLoop = this.getActiveLoop()
@@ -92,7 +92,7 @@ class VideoPlayer extends Component {
                autoPlay
                ref="video">
         </video>
-        <div className="player__controls">
+        <div className="player__controls left-0">
           <div className="progress"
                ref="progress">
             <i className={ loopMarkerClass }
@@ -103,14 +103,18 @@ class VideoPlayer extends Component {
                  style={{flexBasis:videoProgressPercent}}>
             </div>
           </div>
-          <button className="player__button toggle"
+          <button className="player__button toggle white bg-none margin-0 padding-0 border-0 outline-0 "
                   title="Toggle Play"
                   onClick={this.props.actions.togglePlay.bind(this, this.refs.video)}>
-            {buttonIcon}
+            <i className={playButtonClasses}></i>
           </button>
           <VolumeControls volumeSettings={this.props.volumeSettings} 
                           toggleMute={this.props.actions.toggleMute}
                           setVolume={this.props.actions.setVolume} />
+          <button className="player__button white bg-none margin-0 padding-0 border-0 outline-0"
+                  onClick={this.props.actions.toggleFullscreen.bind(this, this.refs.video)}>
+            <i className="fa fa-arrows-alt"></i>
+          </button>
         </div>
       </div>
       )

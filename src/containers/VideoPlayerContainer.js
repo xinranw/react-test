@@ -57,7 +57,38 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     dispatch(Actions.setVolume(newVolume))
   }
 
+  const toggleFullscreen = video => {
+    if (!video){
+      return
+    }
+
+    const hasFullscreenElement = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement
+    const exitFullscreen = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen
+
+    if (!hasFullscreenElement){
+      if (video.requestFullscreen) {
+        video.requestFullscreen()
+      } else if (video.mozRequestFullScreen) {
+        video.mozRequestFullScreen()
+      } else if (video.webkitRequestFullScreen) {
+        video.webkitRequestFullScreen()
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen()
+      } else if (document.mozCancelFullscreen) {
+        document.mozCancelFullscreen()
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen()
+      }
+    }
+  }
+
   const togglePlay = video => {
+    if (!video){
+      return
+    }
+
     const method = video.paused ? 'play' : 'pause'
     video[method]()
   }
@@ -68,6 +99,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     addVideoEventListeners,
     setVolume,
     togglePlay,
+    toggleFullscreen,
   }
   return {
     actions: actions

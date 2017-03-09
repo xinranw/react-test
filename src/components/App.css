@@ -40,7 +40,7 @@ body {
   border:5px solid rgba(0,0,0,0.2);
   box-shadow:0 0 20px rgba(0,0,0,0.2);
   position: relative;
-  font-size: 0;
+  /*font-size: 0;*/
   overflow: hidden;
 }
 
@@ -49,15 +49,11 @@ body {
 }
 
 .player__button {
-  background:none;
-  border:0;
   line-height:1;
   color:white;
   text-align: center;
-  outline:0;
-  padding: 0;
   cursor:pointer;
-  max-width:50px;
+  max-width:35px;
 }
 
 .player__button:focus {
@@ -70,6 +66,8 @@ body {
 }
 
 .player__controls {
+  z-index: 2147483647;
+
   display:flex;
   position: absolute;
   bottom:0;
@@ -80,11 +78,13 @@ body {
   background:rgba(0,0,0,0.1);
 }
 
-.player:hover .player__controls {
+/*.player:hover */
+.player__controls {
   transform: translateY(0);
 }
 
-.player:hover .progress {
+/*.player:hover */
+.progress {
   height:15px;
 }
 
@@ -184,16 +184,23 @@ Displays
 .flex-row { flex-direction: row; }
 
 
-
 /********************************************
-Margins
+Sizes
 ********************************************/
 
 .w100 { width: 100%; }
 
 /********************************************
-Margins
+Margins, paddings, borders, positioning
 ********************************************/
+
+.margin-0 { margin: 0; }
+
+.padding-0 { padding: 0; }
+
+.border-0 { border: 0; }
+
+.outline-0 { outline: 0; }
 
 .margin-top-1 { margin-top: 10px; }
 
@@ -205,4 +212,14 @@ Margins
 
 .margin-right-1 { margin-right: 10px; }
 
-.margin-right-2 { marig-right: 20px; }
+.margin-right-2 { margin-right: 20px; }
+
+.left-0 { left: 0; }
+
+/********************************************
+Colors Background
+********************************************/
+
+.white { color: white; }
+
+.bg-none { background: none; }
